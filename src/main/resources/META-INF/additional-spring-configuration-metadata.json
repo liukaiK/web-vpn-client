@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "cas.casLoginUrl",
+      "type": "java.lang.String",
+      "description": "CAS的登录地址."
+    }
+  ]
+}
