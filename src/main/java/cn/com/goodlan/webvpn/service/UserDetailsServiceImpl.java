@@ -2,6 +2,7 @@ package cn.com.goodlan.webvpn.service;
 
 import cn.com.goodlan.webvpn.pojo.entity.user.User;
 import cn.com.goodlan.webvpn.repository.user.UserRepository;
+import cn.com.goodlan.webvpn.security.userdetails.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,8 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.getByUsername(username);
-
-        return null;
+        return SecurityUser.convertFromUser(user);
     }
 
 

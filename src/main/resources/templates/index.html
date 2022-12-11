@@ -1,1 +1,23 @@
-首页
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+
+</head>
+<body>
+<div th:each="data:${datas}">
+    <p th:text="${data.navigationName}"></p>
+
+    <a th:each="urls:${data.proxyVOs}" th:text="${urls.name}" th:href="${urls.url}"></a>
+
+<!--    <label th:each="role:${roles}" class="check-box">-->
+<!--        <input name="role" type="checkbox" th:value="${role.id}" th:text="${role.name}">-->
+<!--    </label>-->
+</div>
+
+
+</body>
+
+<script th:inline="javascript">
+</script>
+</html>
