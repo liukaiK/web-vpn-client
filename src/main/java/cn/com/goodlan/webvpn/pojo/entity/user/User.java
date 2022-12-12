@@ -1,13 +1,10 @@
 package cn.com.goodlan.webvpn.pojo.entity.user;
 
 import cn.com.goodlan.webvpn.pojo.entity.AbstractEntity;
-import cn.com.goodlan.webvpn.pojo.entity.role.Role;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 学校的用户
@@ -27,10 +24,6 @@ public class User extends AbstractEntity {
     private String name;
 
     private String username;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "resource_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
 
     /**
      * 冗余字段 以/分割
@@ -55,10 +48,6 @@ public class User extends AbstractEntity {
 
     public String getName() {
         return name;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
     }
 
     public String getUsername() {

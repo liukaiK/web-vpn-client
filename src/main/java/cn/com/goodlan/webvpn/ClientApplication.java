@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @EnableAsync
 @EnableJpaAuditing
 @EnableScheduling
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class ClientApplication {
 

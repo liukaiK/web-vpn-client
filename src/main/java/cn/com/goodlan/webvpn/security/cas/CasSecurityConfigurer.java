@@ -11,11 +11,11 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
-import org.springframework.security.cas.userdetails.GrantedAuthorityFromAssertionAttributesUserDetailsService;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
@@ -60,6 +60,8 @@ public class CasSecurityConfigurer {
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
+                .csrf().ignoringAntMatchers("/druid/**")
+                .and()
                 .addFilterBefore(casAuthenticationFilter(), RequestCacheAwareFilter.class)
                 .exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint());
         return http.build();
@@ -82,11 +84,9 @@ public class CasSecurityConfigurer {
 
 
     public AuthenticationUserDetailsService<CasAssertionAuthenticationToken> authenticationUserDetailsService() {
-        String[] attributes = {"name"};
-        GrantedAuthorityFromAssertionAttributesUserDetailsService grantedAuthorityFromAssertionAttributesUserDetailsService = new GrantedAuthorityFromAssertionAttributesUserDetailsService(attributes);
-//        UserDetailsByNameServiceWrapper<CasAssertionAuthenticationToken> authenticationUserDetailsService = new UserDetailsByNameServiceWrapper<>();
-//        authenticationUserDetailsService.setUserDetailsService(userDetailsService);
-        return grantedAuthorityFromAssertionAttributesUserDetailsService;
+        UserDetailsByNameServiceWrapper<CasAssertionAuthenticationToken> userDetailsByNameServiceWrapper = new UserDetailsByNameServiceWrapper<>();
+        userDetailsByNameServiceWrapper.setUserDetailsService(userDetailsService);
+        return userDetailsByNameServiceWrapper;
     }
 
     public AuthenticationEntryPoint casAuthenticationEntryPoint() {

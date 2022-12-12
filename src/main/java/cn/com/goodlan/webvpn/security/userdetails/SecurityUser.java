@@ -1,13 +1,15 @@
 package cn.com.goodlan.webvpn.security.userdetails;
 
 import cn.com.goodlan.webvpn.pojo.entity.user.User;
-import org.springframework.security.authentication.jaas.JaasGrantedAuthority;
+import cn.hutool.core.convert.Convert;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +27,10 @@ public class SecurityUser implements UserDetails, Serializable {
 
     private String password;
 
+    private Long[] roleIds;
+
+    private String roleNames;
+
     private List<SecurityRole> securityRole;
 
 //    private List<SecurityAuthority> authorities;
@@ -38,8 +44,14 @@ public class SecurityUser implements UserDetails, Serializable {
         this.name = user.getName();
         this.username = user.getUsername();
         this.password = "";
-//        this.securityRole = obtainRoles(user.getRoles());
-//        this.authorities = obtainAuthorities(user.getRoles());
+        this.roleIds = splitAndSort(user.getRoleIds());
+        this.roleNames = user.getRoleNames();
+    }
+
+    private Long[] splitAndSort(String roleIds) {
+        Long[] ids = Convert.toLongArray(roleIds.split("/"));
+        Arrays.sort(ids);
+        return ids;
     }
 
 //    private List<SecurityRole> obtainRoles(List<Role> roles) {
@@ -63,9 +75,7 @@ public class SecurityUser implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new JaasGrantedAuthority("", null));
-        //        return authorities;
-
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
 //    public Admin castToUser() {
@@ -135,7 +145,15 @@ public class SecurityUser implements UserDetails, Serializable {
         this.securityRole = securityRole;
     }
 
-//    public void setAuthorities(List<SecurityAuthority> authorities) {
+    public Long[] getRoleIds() {
+        return roleIds;
+    }
+
+    public String getRoleNames() {
+        return roleNames;
+    }
+
+    //    public void setAuthorities(List<SecurityAuthority> authorities) {
 //        this.authorities = authorities;
 //    }
 
