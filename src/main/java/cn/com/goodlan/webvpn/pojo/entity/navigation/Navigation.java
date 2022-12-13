@@ -2,6 +2,7 @@ package cn.com.goodlan.webvpn.pojo.entity.navigation;
 
 import cn.com.goodlan.webvpn.pojo.entity.AbstractEntity;
 import cn.com.goodlan.webvpn.pojo.entity.proxy.Proxy;
+import cn.com.goodlan.webvpn.pojo.entity.role.Role;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -31,6 +32,10 @@ public class Navigation extends AbstractEntity {
     private String proxyNames;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "resource_role_navigation", joinColumns = @JoinColumn(name = "navigation_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "resource_proxy_navigation", joinColumns = @JoinColumn(name = "navigation_id"), inverseJoinColumns = @JoinColumn(name = "proxy_id"))
     private List<Proxy> proxies = new ArrayList<>();
 
@@ -56,6 +61,10 @@ public class Navigation extends AbstractEntity {
 
     public List<Proxy> getProxies() {
         return proxies;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 
 }

@@ -5,6 +5,11 @@
 
 </head>
 <body>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="退出">
+</form>
+
 <div th:each="data:${datas}">
     <p th:text="${data.navigationName}"></p>
 

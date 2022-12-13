@@ -1,8 +1,6 @@
 package cn.com.goodlan.webvpn.pojo.entity.user;
 
 import cn.com.goodlan.webvpn.pojo.entity.AbstractEntity;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -12,8 +10,6 @@ import javax.persistence.*;
  * @author liukai
  */
 @Entity
-@DynamicInsert
-@DynamicUpdate
 @Table(name = "resource_user")
 public class User extends AbstractEntity {
 

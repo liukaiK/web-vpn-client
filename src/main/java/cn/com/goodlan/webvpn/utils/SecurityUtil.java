@@ -14,6 +14,9 @@ public abstract class SecurityUtil {
 
     public static SecurityUser getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
         return (SecurityUser) authentication.getPrincipal();
     }
 

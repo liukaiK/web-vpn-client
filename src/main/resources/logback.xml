@@ -66,6 +66,11 @@
 
     <logger name="org.springframework.boot.devtools" level="off"/>
 
+    <!-- 等同于 SpringSecurity @EnableWebSecurity(debug = false)  -->
+    <logger name="Spring Security Debugger" level="off"/>
+
+
+
     <!--系统操作日志-->
     <root level="info">
         <appender-ref ref="console"/>

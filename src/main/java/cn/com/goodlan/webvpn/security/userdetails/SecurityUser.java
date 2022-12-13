@@ -54,7 +54,18 @@ public class SecurityUser implements UserDetails, Serializable {
         return ids;
     }
 
-//    private List<SecurityRole> obtainRoles(List<Role> roles) {
+    @Override
+    public String toString() {
+        return "SecurityUser{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", roleIds=" + Arrays.toString(roleIds) +
+                ", roleNames='" + roleNames + '\'' +
+                '}';
+    }
+
+    //    private List<SecurityRole> obtainRoles(List<Role> roles) {
 //        List<SecurityRole> roles = new ArrayList<>();
 //        for (Role role : roles) {
 //            roles.add(new SecurityRole(role));

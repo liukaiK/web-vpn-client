@@ -1,9 +1,14 @@
 package cn.com.goodlan.webvpn.security.cas;
 
+import cn.com.goodlan.webvpn.security.cas.authentication.CasAuthenticationFailureHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jasig.cas.client.session.SingleSignOutFilter;
+import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,6 +24,9 @@ import org.springframework.security.core.userdetails.UserDetailsByNameServiceWra
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.savedrequest.RequestCacheAwareFilter;
 
 import java.util.Collections;
@@ -41,6 +49,12 @@ public class CasSecurityConfigurer {
     private String casLoginUrl;
 
     /**
+     * 跳转到CAS的退出地址
+     */
+    @Value("${cas.casLogOutUrl}")
+    private String casLogOutUrl;
+
+    /**
      * 跳回到系统的回调地址
      */
     @Value("${cas.callBackUrl}")
@@ -49,28 +63,51 @@ public class CasSecurityConfigurer {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    /**
-     * 请求这个地址 security判断没有权限 然后跳转到cas登录
-     */
-    private final static String EXCEPTION_URL = "/login/sso";
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Bean
     public SecurityFilterChain casLoginSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/", "/welcome").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().ignoringAntMatchers("/druid/**")
-                .and()
+                .csrf().disable()
+                .addFilterBefore(requestSingleLogoutFilter(), LogoutFilter.class)
+                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
                 .addFilterBefore(casAuthenticationFilter(), RequestCacheAwareFilter.class)
                 .exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint());
         return http.build();
     }
 
+    @Bean
+    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> configContextListener() {
+        ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> registrationBean = new ServletListenerRegistrationBean<>();
+        registrationBean.setListener(new SingleSignOutHttpSessionListener());
+        return registrationBean;
+    }
+
+    public AuthenticationFailureHandler casAuthenticationFailureHandler() {
+        return new CasAuthenticationFailureHandler(objectMapper);
+    }
+
     public CasAuthenticationFilter casAuthenticationFilter() {
         CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
         casAuthenticationFilter.setAuthenticationManager(new ProviderManager(Collections.singletonList(casAuthenticationProvider())));
+        casAuthenticationFilter.setAuthenticationFailureHandler(casAuthenticationFailureHandler());
         return casAuthenticationFilter;
+    }
+
+    public LogoutFilter requestSingleLogoutFilter() {
+        LogoutFilter logoutFilter = new LogoutFilter(casLogOutUrl, new SecurityContextLogoutHandler());
+//        logoutFilter.setLogoutRequestMatcher();
+        return logoutFilter;
+    }
+
+    private SingleSignOutFilter singleSignOutFilter() {
+        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+        return singleSignOutFilter;
     }
 
     public AuthenticationProvider casAuthenticationProvider() {
@@ -107,5 +144,12 @@ public class CasSecurityConfigurer {
         Cas20ServiceTicketValidator ticketValidator = new Cas20ServiceTicketValidator(casServerUrlPrefix);
         return ticketValidator;
     }
+
+
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return web -> web.ignoring().antMatchers("/", "/welcome");
+//    }
+
 
 }
