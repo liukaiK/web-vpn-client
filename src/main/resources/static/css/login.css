@@ -1,0 +1,282 @@
+#app {
+    margin: 0 0 0 0;
+    padding-bottom: 0;
+    background-color: #fff
+}
+
+.vertical-center-modal {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+
+.vertical-center-modal .ivu-modal {
+    top: 0
+}
+
+.login-user-bg {
+    height: 200px;
+    width: 100%;
+    position: relative;
+    background-image: url(../images/background.jpg);
+    background-repeat: repeat-x;
+    background-position: center top
+}
+
+.login-user-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    margin: 130px auto;
+    height: 60px;
+    text-align: center;
+    font-size: 35px
+}
+
+.ivu-card-body {
+    height: 100%;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.ivu-card-body .tip {
+    width: 320px;
+    height: 350px;
+    margin-left: 620px;
+    padding: 20px;
+    border-radius: 6px;
+    text-align: center;
+    background-color: #f7f7f7;
+    -webkit-box-shadow: 0 0 5px #999;
+    box-shadow: 0 0 10px #dadada;
+    -ms-flex-item-align: center;
+    align-self: center;
+    margin-top: 60px
+}
+
+.ivu-card-body .wxlogin {
+    height: 400px
+}
+
+.login-user-card, .login-user-card:hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 1000px;
+    margin: 100px auto;
+    height: 500px
+}
+
+.login-user-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    height: 40px;
+    line-height: 40px
+}
+
+.login-user-card .copyright {
+    color: #747474;
+    font-size: 14px
+}
+
+.login-user-logo {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    height: 85px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 5px
+}
+
+.login-user-logo .logo {
+    width: 1000px;
+    margin: 0 auto
+}
+
+.login-user-bgedit {
+    position: absolute;
+    top: 50px;
+    right: 5%;
+    right: 0;
+    bottom: 0
+}
+
+.login-user-edit {
+    cursor: pointer
+}
+
+.login-user-content {
+    text-indent: 0;
+    font-size: 14px;
+    padding: 15px 0 0 0;
+    word-wrap: break-word;
+    text-align: left;
+    height: 230px;
+    line-height: 24px
+}
+
+.localLoginFrom {
+    margin-top: 10px
+}
+
+.local .ivu-form-item {
+    margin-bottom: 12px
+}
+
+.h350 .login-user-content, .h400 .login-user-content, .h450 .login-user-content {
+    height: 120px;
+    overflow: hidden
+}
+
+.h350 .ivu-card-body .tip {
+    height: 370px
+}
+
+.h400 .ivu-card-body .tip {
+    height: 430px
+}
+
+.h450 .ivu-card-body .tip {
+    height: 480px
+}
+
+.hh400 .ivu-card-body .tip {
+    height: 400px
+}
+
+.localButton {
+    background-color: #2697a5;
+    border: 1px solid #2697a5
+}
+
+.casButton, .localButton {
+    font-size: 20px;
+    padding: 6px
+}
+
+.casButton {
+    background-color: #109a55;
+    border: 1px solid #109a55
+}
+
+.uisButton:hover {
+    font-size: 20px;
+    padding: 6px;
+    background-color: #2697a5;
+    border: 1px solid #2697a5
+}
+
+.tianqi {
+    width: 400px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    position: absolute;
+    top: 10px;
+    margin-left: 650px;
+    color: #1892a3
+}
+
+.wxLogin {
+    width: 300px;
+    height: 220px;
+    margin: -10px 0 0 -49px
+}
+
+.wxCloseButton {
+    position: absolute;
+    z-index: 100;
+    margin-left: -30px;
+    margin-top: 20px;
+    font-size: 20px
+}
+
+.wxLoginIcon {
+    margin: 15px auto;
+    cursor: pointer
+}
+
+.wxLoginIcon, .wxLoginIcon img {
+    width: 40px;
+    height: 40px
+}
+
+@media screen and (max-width: 960px) {
+    .login-user-card, .login-user-card:hover {
+        width: 100%
+    }
+
+    .login-user-title {
+        margin: 160px auto
+    }
+
+    .login-user-card {
+        margin: 100px auto
+    }
+
+    .login-user-logo {
+        position: absolute;
+        top: 0;
+        text-align: center;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden
+    }
+
+    .ivu-card-body .tip {
+        margin-left: 30px
+    }
+
+    .login-user-logo .logo {
+        width: 100%
+    }
+}
+
+.wx_bgimg {
+    background: url('../images/school.png') no-repeat rgb(255, 255, 255);
+    background-size: 100% 100%;
+}
+
+.ivu-btn-primary {
+    color: #fff;
+    background-color: #2d8cf0;
+    border-color: #2d8cf0;
+}
+
+.casButton {
+    background-color: #109a55;
+    border: 1px solid #109a55;
+}
+
+.casButton a {
+    color: white;
+}
+
+.casButton, .localButton {
+    font-size: 20px;
+    padding: 6px;
+}
+
+.ivu-btn-long {
+    width: 100%;
+}
