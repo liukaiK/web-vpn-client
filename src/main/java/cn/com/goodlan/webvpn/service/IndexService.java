@@ -10,6 +10,7 @@ import cn.com.goodlan.webvpn.repository.navigation.NavigationRepository;
 import cn.com.goodlan.webvpn.repository.role.RoleRepository;
 import cn.com.goodlan.webvpn.repository.user.UserRepository;
 import cn.com.goodlan.webvpn.utils.SecurityUtil;
+import cn.hutool.core.util.URLUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -59,9 +60,12 @@ public class IndexService {
 
             List<ProxyVO> proxyVOS = new ArrayList<>();
             for (Proxy proxy : navigation.getProxies()) {
+
+                String path = URLUtil.toURI(proxy.getProtocol() + "://" + proxy.getUrl()).getPath();
+
                 ProxyVO proxyVO = new ProxyVO();
                 proxyVO.setName(proxy.getName());
-                String virtualDomain = proxy.getProtocol() + "://" + proxy.getVirtualDomain() + "." + domain;
+                String virtualDomain = proxy.getProtocol() + "://" + proxy.getVirtualDomain() + "." + domain + path;
                 proxyVO.setUrl(virtualDomain);
                 proxyVOS.add(proxyVO);
             }
