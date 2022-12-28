@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class IndexService {
@@ -52,7 +53,7 @@ public class IndexService {
         }
 
 
-        List<Navigation> navigations = navigationRepository.findAllByRolesIn(roles);
+        Set<Navigation> navigations = navigationRepository.findAllByRolesIn(roles);
 
         for (Navigation navigation : navigations) {
             IndexVO indexVO = new IndexVO();

@@ -1,36 +1,73 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/html">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
 <head>
-    <meta charset="utf-8">
+    <title>首页导航</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
+
 <body>
-
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="退出">
-</form>
-
-<!-- As a link -->
-<nav class="navbar bg-light" th:each="data:${datas}">
-    <h6 th:text="${data.navigationName}"></h6>
-    <div class="container-fluid" th:each="urls:${data.proxyVOs}">
-        <a class="navbar-brand"  th:text="${urls.name}" th:href="${urls.url}">Navbar</a>
+<div class="wx_container">
+    <div class="box">
+        <div class="header ivu-row">
+            <div class="ivu-col ivu-col-span-24">
+                <div style="background-color: rgb(39, 151, 166); padding: 5px 15px;height: 50px;">
+                    <div class="ivu-row">
+                        <div class="ivu-col ivu-col-span-16">
+                            <div class="top-logo">
+                                <img th:src="@{/images/logo.png}" style="height: 40px;"></div>
+                        </div>
+                        <div class="ivu-col ivu-col-span-8" style="text-align: right; line-height: 45px;">
+                            <div class="ivu-dropdown">
+                                <div class="ivu-dropdown-rel"><a href="javascript:void(0)" style="color: rgb(255, 255, 255);">
+                                    2007008
+                                    <i class="ivu-icon ivu-icon-ios-arrow-down"></i></a></div>
+                                <!---->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ivu-row">
+            <div class="ivu-col ivu-col-span-24">
+                <div style="margin-bottom: 30px;" th:each="data:${datas}">
+                    <div class="nav-title" th:text="${data.navigationName}">
+                        业务系统
+                    </div>
+                    <p slot="extra"></p>
+                    <div>
+                        <div class="nav-item" th:each="urls:${data.proxyVOs}" th:attr="data-href=${urls.url}" th:onclick="forward(this)">
+                            <div class="nav-item-icon iconfont icon-fingerprint-line"></div>
+                            <!---->
+                            <div class="nav-item-content">
+                                <div class="title-one" th:text="${urls.name}">信息服务平台</div>
+                                <!---->
+                                <!---->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <!---->
     </div>
-</nav>
-
-
+</div>
 
 </body>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript">
 
-<!-- JavaScript Bundle with Popper -->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>-->
-<!--<script th:inline="javascript">-->
-<!--</script>-->
+    function forward(value) {
+        let url = $(value).attr("data-href");
+        window.open(url);
+    }
+
+</script>
 </html>

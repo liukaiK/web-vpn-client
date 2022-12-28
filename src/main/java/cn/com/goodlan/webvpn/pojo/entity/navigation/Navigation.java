@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 导航
@@ -65,6 +66,19 @@ public class Navigation extends AbstractEntity {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Navigation that = (Navigation) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
